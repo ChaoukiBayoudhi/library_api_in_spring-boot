@@ -1,11 +1,15 @@
 package tn.esb.lmad.library_api.Domains;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import tn.esb.lmad.library_api.Enumerations.BookType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter//permet de generer  tous les setters pour tous les attributs
 @NoArgsConstructor //permet de generer un constructeur non paramétré
@@ -19,12 +23,13 @@ import java.time.LocalDate;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)//juste les colonnes annotées avec @EqualsAndHashCode.Include seront utilisées
 @Entity //Book va être transformer en une table relationnelle par l'ORM
 public class Book {
-    @Id
+    @Id //isbnCode est la clé primaire de la table qui sera générée par l'ORM
     @EqualsAndHashCode.Include
     private String isbnCode;
     @EqualsAndHashCode.Include
     @NonNull //title est obligatoire
     private String title;
+    @JsonFormat(pattern ="dd/MM/yyyy")
     private LocalDate releaseDate;
     @NonNull
     private int stock;
@@ -35,5 +40,7 @@ public class Book {
     @NonNull
     @Enumerated(EnumType.STRING)
     private BookType type;
+    @ManyToMany(mappedBy="authorBooks")
+    private Set<Author> authors = new HashSet<>();
 
 }
