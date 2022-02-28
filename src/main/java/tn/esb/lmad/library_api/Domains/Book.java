@@ -29,7 +29,7 @@ public class Book {
     @EqualsAndHashCode.Include
     @NonNull //title est obligatoire
     private String title;
-    @JsonFormat(pattern ="dd/MM/yyyy")
+    @JsonFormat(pattern ="yyyy-MM-dd")
     private LocalDate releaseDate;
     @NonNull
     private int stock;

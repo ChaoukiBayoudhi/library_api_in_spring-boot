@@ -1,5 +1,6 @@
 package tn.esb.lmad.library_api.Domains;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -25,4 +26,12 @@ public class Address {
     private int postalCode;
     @OneToOne(mappedBy="address",cascade =CascadeType.ALL)
     private Member member;
+
+    public Address(@NonNull int number, @NonNull String street, @NonNull String city, @NonNull int postalCode, Member member) {
+        this.number = number;
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.member = member;
+    }
 }
