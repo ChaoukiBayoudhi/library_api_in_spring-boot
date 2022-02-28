@@ -9,6 +9,9 @@ import tn.esb.lmad.library_api.Enumerations.InscriptionType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @ToString(exclude="photo")
@@ -37,5 +40,7 @@ public class Member {
     @JoinColumn(name = "address_id",referencedColumnName = "id")
     //la ligne ci-dessus est equivalente en SQL à constraint fk_member_address freign key address_id references Address(id)
     private Address address;
+    @ManyToOne
+    private Set<Borrowing> borrowings = new HashSet<>();
 
 }

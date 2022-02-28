@@ -42,5 +42,7 @@ public class Book {
     private BookType type;
     @ManyToMany(mappedBy="authorBooks")
     private Set<Author> authors = new HashSet<>();
+    @ManyToOne
+    private Set<Borrowing> borrowedBooks = new HashSet<>();
 
 }
