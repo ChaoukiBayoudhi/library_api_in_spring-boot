@@ -33,8 +33,8 @@ public class Author {
     @ManyToMany //pour dire que cet attribut est ajouté suite à une relation [n-n] entre Athor et Book
     //creation de la table association
     @JoinTable(name="writting_table",   // le nom de la table association dans la BD
-          joinColumns = @JoinColumn(name = "isbn_code",referencedColumnName = "isbnCode"),
-            inverseJoinColumns=@JoinColumn(name = "author_id",referencedColumnName="id")
+          joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "id"),
+            inverseJoinColumns=@JoinColumn(name = "isbn_code",referencedColumnName="isbnCode")
     )
     private Set<Book> authorBooks = new HashSet<>(); //On a ajouté l'attribut comme Set car on ne peut pas accepeter qu'un Book soit ecrit plusieurs fois par le même auteur
 }

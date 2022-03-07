@@ -22,14 +22,16 @@ public class Borrowing {
     private LocalDate loanDate;
     @NonNull
     private int duration;
-    @Column(name="borrowing_state",columnDefinition = "REJECTED")
+    @Column(name="borrowing_state", length = 50, columnDefinition = "varchar(50) default 'REJECTED'")
     @Enumerated(EnumType.STRING)
     private BorrowingState state;
-    @OneToMany(mappedBy="borrowedBooks",cascade = CascadeType.ALL)
+    @ManyToOne
     @MapsId("bookCode")
     private Book book;
-    @OneToMany(mappedBy="borrowings",cascade=CascadeType.ALL)
+    @ManyToOne
     @MapsId("idMember")
     private Member member;
+    @OneToOne
+    private Return returnBooks;
 
 }

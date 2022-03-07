@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,19 +14,30 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(name="return_book")
 public class Return {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
-    @EmbeddedId
-    @EqualsAndHashCode.Include
-    private BorrowingId borrowingId;
+   @OneToOne(mappedBy="returnBooks")
+   //clé étrangère composite vers la clé primaire composite de "Borrowing"
+   @MapsId("id")
+   @JoinColumns(
+           {
+                   @JoinColumn(name = "book_isbncode", referencedColumnName = "bookCode"),
+                   @JoinColumn(name = "member_id", referencedColumnName = "idMember")
+           }
+   )
+   private Borrowing borrowing;
+
+
     @JsonFormat(pattern="yyyy-MM-dd")
     @NonNull
     @EqualsAndHashCode.Include
     private LocalDate returnDate;
     private String description;
-    @Column(columnDefinition = "0")
+    @Column(columnDefinition="INT DEFAULT '1'")
+    //or
+    //@ColumnDefault(value = "0")
     private int penalty;
 }

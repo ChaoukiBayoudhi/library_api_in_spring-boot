@@ -17,5 +17,6 @@ import java.io.Serializable;
 public class BorrowingId implements Serializable {
     @Column(name="isbn_book_code")
     private String bookCode;
+    @Column(name="member_id")
     private Long idMember;
 }

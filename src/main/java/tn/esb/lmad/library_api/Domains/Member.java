@@ -40,7 +40,7 @@ public class Member {
     @JoinColumn(name = "address_id",referencedColumnName = "id")
     //la ligne ci-dessus est equivalente en SQL à constraint fk_member_address freign key address_id references Address(id)
     private Address address;
-    @ManyToOne
+    @OneToMany(mappedBy="member",cascade=CascadeType.ALL)
     private Set<Borrowing> borrowings = new HashSet<>();
 
 }
