@@ -19,13 +19,13 @@ public class Return {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-   @OneToOne(mappedBy="returnBooks")
+   @OneToOne(mappedBy="returnBooks",cascade = CascadeType.ALL)
    //clé étrangère composite vers la clé primaire composite de "Borrowing"
-   @MapsId("id")
+   //@MapsId("borrowing_id")
    @JoinColumns(
            {
-                   @JoinColumn(name = "book_isbncode", referencedColumnName = "bookCode"),
-                   @JoinColumn(name = "member_id", referencedColumnName = "idMember")
+                   @JoinColumn(name = "book_isbncode", referencedColumnName = "isbn_book_code"),
+                   @JoinColumn(name = "member_id", referencedColumnName = "member_id")
            }
    )
    private Borrowing borrowing;

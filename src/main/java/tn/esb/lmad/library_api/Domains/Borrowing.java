@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class Borrowing {
     @EmbeddedId //cet id est composé par les colonnes definies dans la classe BorrowingId annotée par @Embeddable
     @EqualsAndHashCode.Include
+    @Column(name = "borrowing_id")
     private BorrowingId id;
     @NonNull
     @JsonFormat(pattern="yyyy-MM-dd")

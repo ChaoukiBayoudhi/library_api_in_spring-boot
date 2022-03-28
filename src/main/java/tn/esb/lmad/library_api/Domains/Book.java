@@ -40,7 +40,7 @@ public class Book {
     @NonNull
     @Enumerated(EnumType.STRING)
     private BookType type;
-    @ManyToMany //(mappedBy="authorBooks")
+    @ManyToMany (mappedBy="authorBooks")
     private Set<Author> authors = new HashSet<>();
     @OneToMany(mappedBy="book",cascade = CascadeType.ALL)
     private Set<Borrowing> borrowedBooks = new HashSet<>();
