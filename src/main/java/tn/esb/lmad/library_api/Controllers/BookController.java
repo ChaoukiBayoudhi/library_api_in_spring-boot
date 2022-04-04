@@ -17,6 +17,6 @@ public class BookController {
     @GetMapping("")
     public ResponseEntity<List<Book>> allBooks()
     {
-        bookServ.getAllBooks();
+       return bookServ.getAllBooks();
     }
 }
