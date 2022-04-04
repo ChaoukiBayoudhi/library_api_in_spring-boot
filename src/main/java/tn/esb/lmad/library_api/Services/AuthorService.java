@@ -2,10 +2,10 @@ package tn.esb.lmad.library_api.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esb.lmad.library_api.Repositories.BookRepository;
+import tn.esb.lmad.library_api.Repositories.AuthorRepository;
 
 @Service
-public class BookService {
+public class AuthorService {
     @Autowired
-    private BookRepository bookRepos;
+    private AuthorRepository authorRepos;
 }

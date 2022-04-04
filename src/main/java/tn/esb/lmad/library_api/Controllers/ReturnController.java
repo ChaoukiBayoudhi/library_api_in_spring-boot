@@ -2,10 +2,10 @@ package tn.esb.lmad.library_api.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import tn.esb.lmad.library_api.Services.BookService;
+import tn.esb.lmad.library_api.Services.ReturnService;
 
 @RestController
-public class BookController {
+public class ReturnController {
     @Autowired
-    private BookService bookServ;
+    private ReturnService returnServ;
 }
