@@ -33,4 +33,21 @@ public class BookController {
     {
         return bookServ.addBook(b);
     }
+    @GetMapping("/{isbnCode}") //{name} => to say that this part of the path is variable
+    //http://localhost:9592/books/123-esb-33
+    //http://localhost:9592/books/123-esb-44
+    //3 ways to send data to the server
+    //1-using @RequestBody : to inform the server that the value of the variable is passed on the body of the request
+    //2-using @RequestParam : to pass variables values on the path after ?
+    //3-using @PathVariable : the variable's value is passed on the path after /
+    public ResponseEntity<?> getBookById(@PathVariable String isbnCode)
+    {
+        return bookServ.getBook(isbnCode);
+    }
+    //http://localhost:9592/books/author?firstName=jobran&lastName=khalil
+  //  @GetMapping("/author")
+//    public ResponseEntity<?> getAuthorBooks(@RequestParam String firstName,String lastName)
+//    {
+//       return bookServ.getBooksByAuthor(firstName,lastName);
+//    }
 }

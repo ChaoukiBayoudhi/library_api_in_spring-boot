@@ -1,7 +1,7 @@
 package tn.esb.lmad.library_api.Enumerations;
 
 public enum BookType {
-    Litteture,
+    Litetare,
     Science,
     History,
     Culture,
