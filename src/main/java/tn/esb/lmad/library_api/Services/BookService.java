@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tn.esb.lmad.library_api.Domains.Author;
 import tn.esb.lmad.library_api.Domains.Book;
 import tn.esb.lmad.library_api.Repositories.BookRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Service
 public class BookService {
@@ -49,6 +52,66 @@ public class BookService {
 
     }
 
-//    public ResponseEntity<?> getBooksByAuthor(String firstName, String lastName) {
-//    }
+    public ResponseEntity<?> getBooksByAuthor(String authorFirstName, String authorLastName) {
+        List<Book> lstBooks =bookRepos.findAll();
+        List<Book> lstRes=new ArrayList<>();
+        Author a1=new Author();
+        a1.setFirstName(authorFirstName);
+        a1.setLastName(authorLastName);
+        for(Book b1: lstBooks) {
+            if(b1.getAuthors().contains(a1))
+                lstRes.add(b1);
+        }
+        if(lstRes.isEmpty())
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No books found for this author.");
+        return ResponseEntity.status(HttpStatus.OK).body(lstRes);
+    }
+
+    //get most borrowed books
+    public ResponseEntity<?> getMostBorrowedBooks()
+    {
+        //find the max count of borrowing
+        //if any book borrowed number = max --> return it
+        OptionalInt max_broowed=bookRepos.findAll().stream()//convert from list to stream
+                .mapToInt(b1->b1.getBorrowedBooks().size())//le nombre de fois ou le book a été emprunté
+                .max();
+        int max=0;
+        if(max_broowed.isPresent())
+            max=max_broowed.getAsInt();
+        int finalMax = max;
+        List<Book> lstRes=bookRepos.findAll().stream()
+                .filter(b1->b1.getBorrowedBooks().size()== finalMax)
+                .toList();
+        if(lstRes.isEmpty())
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No borrowing at this moment.");
+        return ResponseEntity.status(HttpStatus.OK).body(lstRes);
+    }
+
+    //update a book
+    public ResponseEntity<?> modifyBook(Book newBook,String isbnCode)
+    {
+        Optional<Book> res=bookRepos.findById(isbnCode);
+        if(res.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book with isbCod = "+isbnCode);
+        Book b1=bookRepos.save(newBook);
+        return ResponseEntity.status(HttpStatus.OK).body(b1);
+    }
+    //remove
+    public ResponseEntity<?> removeBook(String isbnCode)
+    {
+        Optional<Book> res=bookRepos.findById(isbnCode);
+        if(res.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No book with isbCod = "+isbnCode);
+        bookRepos.deleteById(isbnCode);
+        return ResponseEntity.status(HttpStatus.OK).body("The book with isbnCode = "+isbnCode + " has been successfully deleted.");
+    }
+
+    public ResponseEntity<?> getBooksBeforeDate(String relDate)
+    {
+        List<Book> lstRes=bookRepos.booksBeforeDate(relDate);
+        if(lstRes.isEmpty())
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No books released before "+relDate);
+        return ResponseEntity.status(HttpStatus.OK).body(lstRes);
+
+    }
 }

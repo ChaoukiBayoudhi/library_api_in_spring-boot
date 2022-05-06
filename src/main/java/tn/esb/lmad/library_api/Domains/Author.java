@@ -1,10 +1,7 @@
 package tn.esb.lmad.library_api.Domains;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Data //permet de remplacer @Getter, @Setter, @RequiredArgsConstructor, @ToString et @EqualsAndHashCode
 @NoArgsConstructor
 @ToString(exclude ="photoPath")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Author {
     @Id
@@ -21,8 +19,10 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //la valeur de la clé primaire du 1er author sera 1, le suivant 2,...
     private Long id;
     @NonNull
+    @EqualsAndHashCode.Include
     private String firstName;
     @NonNull
+    @EqualsAndHashCode.Include
     private String lastName;
     @JsonFormat(pattern ="dd/MM/yyyy")
     private LocalDate birthDate;

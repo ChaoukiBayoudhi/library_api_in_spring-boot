@@ -7,6 +7,7 @@ import tn.esb.lmad.library_api.Domains.Book;
 import tn.esb.lmad.library_api.Services.BookService;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -45,9 +46,27 @@ public class BookController {
         return bookServ.getBook(isbnCode);
     }
     //http://localhost:9592/books/author?firstName=jobran&lastName=khalil
-  //  @GetMapping("/author")
-//    public ResponseEntity<?> getAuthorBooks(@RequestParam String firstName,String lastName)
-//    {
-//       return bookServ.getBooksByAuthor(firstName,lastName);
-//    }
+    @GetMapping("/author")
+    public ResponseEntity<?> getAuthorBooks(@RequestParam String firstName,@RequestParam String lastName)
+    {
+       return bookServ.getBooksByAuthor(firstName,lastName);
+    }
+    //http://localhost:9592/books/update/book-003
+    @PutMapping("/{isbnCode}")
+    public ResponseEntity<?> updateBook(@RequestBody Book newBook,@PathVariable String isbnCode)
+    {
+        return bookServ.modifyBook(newBook,isbnCode);
+    }
+    //http://localhost:9592/books/delete/book-002
+    @DeleteMapping("/{isbnCode}")
+    public ResponseEntity<?> deleteBook(@PathVariable String isbnCode)
+    {
+        return bookServ.removeBook(isbnCode);
+    }
+    //http://localhost:9592/books/before?date=2021-01-01
+    @GetMapping("/before")
+    public ResponseEntity<?> booksBeforeDate(@RequestParam String relDate)
+    {
+        return bookServ.getBooksBeforeDate(relDate);
+    }
 }
